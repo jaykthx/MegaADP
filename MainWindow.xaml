@@ -1,0 +1,67 @@
+﻿<Window x:Class="ADP_.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ADP_"
+        mc:Ignorable="d"
+        Title="MegaADP" Height="400" Width="500">
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+O" Command="Open"/>
+        <KeyBinding Gesture="Ctrl+S" Command="Save"/>
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="SaveAs"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="OpenCommandBinding_Executed"/>
+        <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed"/>
+        <CommandBinding Command="SaveAs" Executed="SaveAsCommandBinding_Executed"/>
+    </Window.CommandBindings>
+    <Grid x:Name="D_grid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem Header="File">
+                <MenuItem Grid.Column="1" Click="Open_Click" Header="Open"/>
+                <MenuItem Grid.Column="1" Click="Save_Click" Header="Save"/>
+                <MenuItem Grid.Column="1" Click="Save_As_Click" Header="Save As..."/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Add New Function" Click="Add_Click"/>
+                <MenuItem Header="Delete Function" Click="Del_Click"/>
+            </MenuItem>
+            <MenuItem Header="About" Click="About_Click"/>
+            <MenuItem IsEnabled="False" Focusable="False" Header="Count: " x:Name="D_count_text"/>
+        </Menu>
+        <ListView Background="#FF3D3D3D" Foreground="White" x:Name="D_tree" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" SelectionChanged="D_tree_SelectionChanged" ItemsSource="{Binding Path=functions}"/>
+        <Grid Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Background="LightGray" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Function Details" Grid.ColumnSpan="2" TextAlignment="Center" FontSize="16"/>
+            <TextBlock Text="Time (Frames): " Grid.Row="1"/>
+            <TextBox Text="{Binding time_frames}" x:Name="D_frame" ToolTip="Which frame the function is applied on" Grid.Column="1" Grid.Row="1"/>
+            <TextBlock Text="Function ID: " Grid.Row="2"/>
+            <TextBox Text="{Binding ID}" x:Name="D_id" ToolTip="Function ID" Grid.Column="1" Grid.Row="2" TextChanged="D_id_TextChanged"/>
+            <TextBlock Text="Function Value: " Grid.Row="3"/>
+            <TextBox Text="{Binding Value}" x:Name="D_val" ToolTip="Function Value" Grid.Column="1"  Grid.Row="3"/>
+            <CheckBox Content="Alt PV" x:Name="D_check" IsChecked="{Binding alt_pv_flag}"  Grid.Row="4"/>
+            <CheckBox Content="Enabled (Frame Limit)" x:Name="D_check_2" IsChecked="{Binding is_30_fps}" Grid.Column="1"  Grid.Row="4"/>
+        </Grid>
+    </Grid>
+</Window>
